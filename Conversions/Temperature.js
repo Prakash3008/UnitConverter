@@ -1,128 +1,91 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, ScrollView, Dimensions, TextInput } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { Text, View, TextInput } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-
-const {width, height} = Dimensions.get('window')
+import styles from '../static/styles'
 
 class Temperature extends Component{
     constructor(props){
         super(props);
         this.state = {
-            unitFrom: 'C', userInput: '', unitTo: 'F', value: null,
+            FromUnit: 'C', userInput: '', ToUnit: 'F', output: null,
         }
     }
 
-    FromChange = (unit) => {
-    this.setState({unitFrom:unit},() => this.calculate());
+    unitFrom = (unitf) => {
+    this.setState({FromUnit:unitf},() => this.compute());
     }
-    ToChange = (unit1) => {
-    this.setState({unitTo:unit1},() => this.calculate());
+    unitTo = (unitt) => {
+    this.setState({ToUnit:unitt},() => this.compute());
     }
 
-    calculate = () => {
+    compute = () => {
         if (this.state.userInput !== '') {
             let mid, result;
-            if (this.state.unitFrom == 'F') {
+            if (this.state.FromUnit == 'F') {
                 mid = (this.state.userInput - 32) * 5 / 9;
             }
-            else if (this.state.unitFrom == 'C') {
+            else if (this.state.FromUnit == 'C') {
                 mid = this.state.userInput;
             }
-            else if (this.state.unitFrom == 'K'){
+            else if (this.state.FromUnit == 'K'){
                 mid = this.state.userInput - 273.15
             };
 
-            if (this.state.unitTo == 'F') {
+            if (this.state.ToUnit == 'F') {
                 result = mid * 1.8 + 32;
             }
-            else if (this.state.unitTo == 'C') {
+            else if (this.state.ToUnit == 'C') {
                 result = mid;
             }
-            else if (this.state.unitTo == 'K'){
+            else if (this.state.ToUnit == 'K'){
                 result =  mid * 1 + 273.15 ;
             };
-            this.setState({ value: parseFloat(result).toFixed(1) });
+            this.setState({ output: parseFloat(result).toFixed(1) });
     }
 }
 
-    updateAndCalculate = (text) => {
+    validateText = (text) => {
         this.setState({userInput: text.replace(/,/g,'')},() => 
-            this.calculate())
+            this.compute())
     }
 
     render(){
         return (
-            <View>
-            <Text style={styles.title}> Temperature Conversion</Text>
+            <View style={styles.title} >
+            <Text style={styles.title}>Temperature Conversion 🌡️</Text>
             <View style={styles.contentsContainer}>
-                <Text style={styles.textStyle}>From:            </Text>
                 <TextInput
                 placeholder="Enter here"
-                style={styles.textStyle}
+                style={styles.textStyle1}
                 value= {this.state.userInput}
-                onChangeText={this.updateAndCalculate}
+                onChangeText={this.validateText}
                 maxLength={10}
                 keyboardType='numeric'
                 />
             <Picker   
                 style={styles.picker}
-                selectedValue={this.state.unitFrom}
-                onValueChange={this.FromChange}>
+                selectedValue={this.state.FromUnit}
+                onValueChange={this.unitFrom}>
                 <Picker.Item label="°C (Celsius)" value="C" />
-                <Picker.Item label="°F (Farenheit)" value="F" />
+                <Picker.Item label="°F (Fahrenheit)" value="F" />
                 <Picker.Item label="K (Kelvin)" value="K" />
 
             </Picker>
 
             </View>
             <View style={styles.contentsContainer}>
-                <Text style={styles.textStyle}>To:            </Text>
-                <Text style={styles.textStyle}> {this.state.value} </Text>
+                <Text style={styles.textStyle1}> {this.state.output} </Text>
                 <Picker   
                 style={styles.picker}
-                selectedValue={this.state.unitTo}
-                onValueChange={this.ToChange}>
+                selectedValue={this.state.ToUnit}
+                onValueChange={this.unitTo}>
                 <Picker.Item label="°C (Celsius)" value="C" />
-                <Picker.Item label="°F (Farenheit)" value="F" />
+                <Picker.Item label="°F (Fahrenheit)" value="F" />
                 <Picker.Item label="K (Kelvin)" value="K" />
             </Picker>                   
-                
             </View>
             </View>
         );
     }
 }
-const styles = StyleSheet.create({
-    picker: {
-        height: 50,
-        width: 160,
-    },
-    title:{
-        fontSize: 20,
-        fontWeight: 'bold',
-        justifyContent: 'center', 
-        alignItems: 'center',
-        paddingTop:60,
-    },
-    textStyle: {
-        color: "black",
-        fontSize: 15,
-        
-    },
-    contentsContainer: {
-    flexDirection: "row",
-    justifyContent: 'center', 
-    alignItems: 'center',
-    paddingTop: 100,
-
-    },
-    container: {
-    justifyContent: 'center', 
-    alignItems: 'center',
-    paddingTop: 100,
-
-    },
-
-});
 export default Temperature;

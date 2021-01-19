@@ -1,6 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Length from './Conversions/Length';
@@ -12,15 +10,14 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { AntDesign } from '@expo/vector-icons'; 
 
-const Tab = createMaterialBottomTabNavigator();
-class Main extends Component{
+const Nav = createMaterialBottomTabNavigator();
+class App extends Component{
   render(){
     return(
-      <NavigationContainer
-      activeColor="#f0edf6"
+      <NavigationContainer activeColor="#f0edf6"
         inactiveColor="#3e2465">
-      <Tab.Navigator>
-        <Tab.Screen name="Distance" component={Length}
+      <Nav.Navigator>
+        <Nav.Screen name="Distance" component={Length}
           options={{
           tabBarLabel: 'Distance',
           tabBarIcon: ({}) => (
@@ -28,7 +25,7 @@ class Main extends Component{
           ),
         }}
         /> 
-        <Tab.Screen name="Temperature" component={Temperature} 
+        <Nav.Screen name="Temperature" component={Temperature} 
           options={{
             tabBarLabel: 'Temperature',
             tabBarIcon: ({}) => (
@@ -36,7 +33,7 @@ class Main extends Component{
             ),
           }}
         />
-        <Tab.Screen name="Currency" component={Currency}
+        <Nav.Screen name="Currency" component={Currency}
           options={{
           tabBarLabel: 'Currency',
           tabBarIcon: ({}) => (
@@ -44,7 +41,7 @@ class Main extends Component{
           ),
         }}
         />
-        <Tab.Screen name="Time" component={Time}
+        <Nav.Screen name="Time" component={Time}
           options={{
           tabBarLabel: 'Time',
           tabBarIcon: ({}) => (
@@ -52,7 +49,7 @@ class Main extends Component{
           ),
         }}
         />
-        <Tab.Screen name="Number" component={Number}
+        <Nav.Screen name="Number" component={Number}
           options={{
           tabBarLabel: 'Number',
           tabBarIcon: ({}) => (
@@ -60,12 +57,9 @@ class Main extends Component{
           ),
         }}
         />
-      </Tab.Navigator>
+      </Nav.Navigator>
     </NavigationContainer>
     )
   }
 }
-
-
-
-export default Main;
+export default App;
