@@ -25,11 +25,11 @@ const styles = StyleSheet.create({
         fontSize: 20,  
     },
     textStyle1: {
-        color: "black",
+        color: "grey",
         fontSize: 20,
         borderRadius: 4,
         borderBottomWidth: 1,
-        height: 40, 
+        height: 41, 
         borderBottomColor: 'gray',        
     },
     contentsContainer: {
